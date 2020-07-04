@@ -19,12 +19,14 @@ namespace Sudoko_AI
             if (args == null || args.Length == 0)
             {
                 FolderBrowserDialog fbd = new FolderBrowserDialog();
+                Console.WriteLine("Please select Folder");
+                Console.WriteLine("NOTE:all the files in this folder would be processed");
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
                     foreach (var path in Directory.GetFiles(fbd.SelectedPath, "*.txt"))
                     {
-                        Console.WriteLine("Suduko - Using MRV\n file {0}",path);
-                        Console.WriteLine("Input\n");
+                        Console.WriteLine("SUDUKO -  MRV Agent for file {0}\n", System.IO.Path.GetFileName(path));
+                        Console.WriteLine("INPUT\n");
                         PrintInputGrid(InputGrid(path));
                         var mrv = GetGrids(path);
                         Solver mrvSolver = new Solver(mrv);
@@ -33,13 +35,13 @@ namespace Sudoko_AI
                         mrvSolver.Run("MRV");
                         stopwatch.Stop();
                         elapsed_time = stopwatch.Elapsed;
-                        Console.WriteLine("Output\n");
+                        Console.WriteLine("OUTPUT\n");
                         PrintOutputGrid(mrvSolver);
                         mrvSolver.PrintGridSteps();
                         Console.WriteLine("Time to solve (hh:mm:ss) : {0}\n", elapsed_time);
 
-                        Console.WriteLine("Suduko - Using Uninformed\n file {0}", path);
-                        Console.WriteLine("Input\n");
+                        Console.WriteLine("SUDUKO -  Uninformed Agent for file {0}\n", System.IO.Path.GetFileName(path));
+                        Console.WriteLine("INPUT\n");
                         PrintInputGrid(InputGrid(path));
                         var uninformed = GetGrids(path);
                         Solver uninformedSolver = new Solver(uninformed);
@@ -48,7 +50,7 @@ namespace Sudoko_AI
                         uninformedSolver.Run("UNINFORMED");
                         stopwatch.Stop();
                         elapsed_time = stopwatch.Elapsed;
-                        Console.WriteLine("Output\n");
+                        Console.WriteLine("OUTPUT\n");
                         PrintOutputGrid(uninformedSolver);
                         uninformedSolver.PrintGridSteps();
                         Console.WriteLine("Time to solve (hh:mm:ss) : {0}\n", elapsed_time);
